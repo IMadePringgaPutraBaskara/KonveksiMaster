@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_login_app">Login_app</string>
+    <string name="title_activity_register_app">RegisterAPp</string>
+</resources>
