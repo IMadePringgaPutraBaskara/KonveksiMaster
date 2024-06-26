@@ -21,31 +21,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
+                android:id="@+id/registrasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Registrasi"
-                android:id="@+id/registrasi"
-                android:textSize="36sp"
                 android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/reg_username"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/reg_username"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="15dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="50dp"/>
+                android:textColorHighlight="@color/cardview_dark_background" />
 
             <EditText
                 android:id="@+id/email"
@@ -61,6 +61,32 @@
                 android:textColorHighlight="@color/cardview_dark_background" />
 
             <EditText
+                android:id="@+id/reg_Address"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Alamat"
+                android:inputType="textPostalAddress"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/cardview_dark_background" />
+
+            <EditText
+                android:id="@+id/tel_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edittext"
+                android:drawablePadding="8dp"
+                android:hint="Nomor Telepon"
+                android:inputType="text|number"
+                android:padding="15dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/cardview_dark_background" />
+
+            <EditText
                 android:id="@+id/reg_pass"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -68,32 +94,19 @@
                 android:background="@drawable/custom_edittext"
                 android:drawablePadding="8dp"
                 android:hint="Password"
-                android:padding="15dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:inputType="textPassword" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/konf_regpass"
-                android:background="@drawable/custom_edittext"
-                android:drawablePadding="8dp"
-                android:hint="Konfirmasi Password"
-                android:padding="15dp"
                 android:inputType="textPassword"
+                android:padding="15dp"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="20dp"/>
+                android:textColorHighlight="@color/cardview_dark_background" />
 
             <Button
+                android:id="@+id/regist_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/regist_button"
+                android:layout_marginTop="80dp"
+                android:backgroundTint="@color/blue"
                 android:text="Registrasi"
-                android:textSize="18sp"
-                android:layout_marginTop="100dp"
-                android:backgroundTint="@color/blue" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
