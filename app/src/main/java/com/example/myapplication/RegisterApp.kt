@@ -6,6 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 class RegisterApp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_app)
+        setContentView(R.layout.register_app) // Pastikan layout yang sesuai
     }
 }

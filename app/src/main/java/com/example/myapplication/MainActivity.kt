@@ -2,11 +2,12 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,13 +19,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        // Pastikan ID button benar
         val button = findViewById<Button>(R.id.elevatedButton)
         button.setOnClickListener {
-            // Menggunakan BeforeLog::class.java untuk intent
-            val intent = Intent(this, BeforeLog::class.java)
+            Log.d("MainActivity", "Button clicked") // Untuk memastikan bahwa onClickListener dipanggil
+            val intent = Intent(this, LoginApp::class.java)
             startActivity(intent)
         }
+
+
     }
 }
