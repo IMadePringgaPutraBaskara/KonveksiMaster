@@ -3,4 +3,7 @@
     <string name="title_activity_login_app">Login_app</string>
     <string name="title_activity_register_app">RegisterAPp</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="text_label_1">Pembayaran</string>
+    <string name="text_label_2">Beranda</string>
+    <string name="text_label_3">Contact Person Admin\n</string>
 </resources>

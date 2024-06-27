@@ -54,6 +54,8 @@ android {
 dependencies {
 
     implementation(libs.glide)
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.material:material:<version>")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
