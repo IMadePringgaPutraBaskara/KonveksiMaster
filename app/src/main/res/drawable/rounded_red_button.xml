@@ -1,0 +1,6 @@
+<!-- rounded_red_button.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="8dp" /> <!-- Mengatur sudut bulatan -->
+    <solid android:color="#FF0000" /> <!-- Warna latar belakang (merah) -->
+</shape>
