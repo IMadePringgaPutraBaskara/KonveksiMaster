@@ -118,14 +118,14 @@
 
         <TextView
             android:id="@+id/value"
-            android:layout_width="17dp"
-            android:layout_height="42dp"
+            android:layout_width="45dp"
+            android:layout_height="44dp"
             android:text="0"
             android:textSize="30sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonplus"
-            app:layout_constraintStart_toEndOf="@+id/buttonminus" />
+            app:layout_constraintStart_toEndOf="@+id/buttonminus"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
