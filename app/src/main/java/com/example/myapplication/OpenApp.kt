@@ -17,18 +17,6 @@ class OpenApp : AppCompatActivity() {
             val intent = Intent(this, LoginApp::class.java)
             startActivity(intent)
         }
-        NavigationBarView.OnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.nav_menu_utama -> {
-                    // Respond to navigation item 1 click
-                    true
-                }
-                R.id.item_2 -> {
-                    // Respond to navigation item 2 click
-                    true
-                }
-                else -> false
-            }
         }
-    }
+
 }

@@ -44,26 +44,26 @@
         <activity
             android:name=".TshirtSale"
             android:exported="true"
-            android:label="@string/title_activity_tshirt_sale"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ShirtSale"
-            android:exported="false"
-            android:label="@string/title_activity_tshirt_sale"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".PoloSale"
-            android:exported="false"
-            android:label="@string/title_activity_tshirt_sale"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".HoodieSale"
-            android:exported="false"
-            android:label="@string/title_activity_tshirt_sale"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CartOrder"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
