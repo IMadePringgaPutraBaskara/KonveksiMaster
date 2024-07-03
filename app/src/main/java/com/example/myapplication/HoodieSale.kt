@@ -9,25 +9,36 @@ import androidx.appcompat.app.AppCompatActivity
 
 class HoodieSale : AppCompatActivity() {
 
-    private lateinit var value:TextView
+    private lateinit var valueTextView: TextView
     private var count = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.hoodie_sale)
 
-        value = findViewById(R.id.value)
+        valueTextView = findViewById(R.id.value)
+        val orderButton: Button = findViewById(R.id.orderButton)
+
+        orderButton.setOnClickListener {
+            val intent = Intent(this, CartOrder::class.java)
+            intent.putExtra("itemCount", count)
+            intent.putExtra("totalPrice", calculateTotalPrice())
+            intent.putExtra("itemType", "Hoodie") // Tambahkan itemType
+            startActivity(intent)
+        }
     }
 
-    fun increasement(v: View){
+    private fun calculateTotalPrice(): Int {
+        return count * 150000 // Harga per item
+    }
+
+    fun increasement(v: View) {
         count++
-        value.text = count .toString()
+        valueTextView.text = count.toString()
     }
 
-    fun decreasement(v: View){
+    fun decreasement(v: View) {
         if (count > 0) count--
-        value.text = count.toString()
+        valueTextView.text = count.toString()
     }
-
-
 }
-
