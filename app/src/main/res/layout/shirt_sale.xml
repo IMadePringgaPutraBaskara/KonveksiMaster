@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TshirtSale">
+    tools:context=".Shirtsale">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,14 +50,14 @@
 
             <ImageView
                 android:id="@+id/imageTShirt"
-                android:layout_width="259dp"
-                android:layout_height="279dp"
+                android:layout_width="320dp"
+                android:layout_height="353dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.188"
-                app:srcCompat="@drawable/image2"
+                app:srcCompat="@drawable/image4s"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
