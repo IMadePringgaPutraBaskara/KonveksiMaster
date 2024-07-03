@@ -91,7 +91,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.953" />
+                        app:layout_constraintVertical_bias="1.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -126,7 +126,7 @@
                         app:layout_constraintHorizontal_bias="0.495"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.973" />
+                        app:layout_constraintVertical_bias="1.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -148,8 +148,8 @@
 
                     <ImageView
                         android:id="@+id/imageShirt"
-                        android:layout_width="134dp"
-                        android:layout_height="140dp"
+                        android:layout_width="143dp"
+                        android:layout_height="148dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.47"
@@ -206,7 +206,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.993" />
+                        app:layout_constraintVertical_bias="0.986" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
