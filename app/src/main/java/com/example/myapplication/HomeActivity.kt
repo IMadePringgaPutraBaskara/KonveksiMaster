@@ -28,13 +28,13 @@ class HomeActivity : AppCompatActivity() {
 
         imagePolo.setOnClickListener {
             // Tambahkan aksi saat imagePolo diklik
-            val intent = Intent(this@HomeActivity, PoloActivity::class.java)
+            val intent = Intent(this@HomeActivity, PoloSale::class.java)
             startActivity(intent)
         }
 
         imageHoodie.setOnClickListener {
             // Tambahkan aksi saat imageHoodie diklik
-            val intent = Intent(this@HomeActivity, HoodieActivity::class.java)
+            val intent = Intent(this@HomeActivity, HoodieSale::class.java)
             startActivity(intent)
         }
     }

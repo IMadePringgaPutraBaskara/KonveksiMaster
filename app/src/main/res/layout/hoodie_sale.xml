@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShirtSale">
+    tools:context=".HoodieSale">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,22 +50,22 @@
 
             <ImageView
                 android:id="@+id/imageShirt"
-                android:layout_width="320dp"
-                android:layout_height="353dp"
+                android:layout_width="240dp"
+                android:layout_height="317dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.188"
-                app:srcCompat="@drawable/image4s"
+                app:srcCompat="@drawable/image3h"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textPolo"
+                android:id="@+id/textHoodie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp"
-                android:text="Baju Kaos"
+                android:text="Hoodie"
                 android:textSize="30dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -76,13 +76,12 @@
                 android:id="@+id/textPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="Rp 100.000"
+                android:text="Rp 150.000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textPolo" />
+                app:layout_constraintTop_toBottomOf="@+id/textHoodie" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -99,8 +98,8 @@
                 android:onClick="decreasement"
                 android:text="-"
                 android:textSize="20dp"
-                tools:layout_editor_absoluteX="88dp"
-                tools:layout_editor_absoluteY="42dp" />
+                tools:layout_editor_absoluteX="260dp"
+                tools:layout_editor_absoluteY="40dp" />
 
             <Button
                 android:id="@+id/button"
@@ -110,8 +109,8 @@
                 android:onClick="increasement"
                 android:text="+"
                 android:textSize="20dp"
-                tools:layout_editor_absoluteX="264dp"
-                tools:layout_editor_absoluteY="41dp" />
+                tools:layout_editor_absoluteX="85dp"
+                tools:layout_editor_absoluteY="40dp" />
 
             <TextView
                 android:id="@+id/value"
