@@ -6,4 +6,5 @@
     <string name="text_label_1">Pembayaran</string>
     <string name="text_label_2">Beranda</string>
     <string name="text_label_3">Contact Person Admin\n</string>
+    <string name="title_activity_tshirt_sale">TshirtSale</string>
 </resources>
