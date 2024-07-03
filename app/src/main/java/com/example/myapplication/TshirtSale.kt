@@ -20,21 +20,16 @@ class TshirtSale : AppCompatActivity() {
         val orderButton: Button = findViewById(R.id.orderButton)
 
         orderButton.setOnClickListener {
-            // Membuat Intent untuk pindah ke CartOrder Activity
             val intent = Intent(this, CartOrder::class.java)
-
-            // Mengirim data ekstra ke CartOrder Activity
             intent.putExtra("itemCount", count)
             intent.putExtra("totalPrice", calculateTotalPrice())
-
-            // Memulai Activity CartOrder
+            intent.putExtra("itemType", "Tshirt") // Tambahkan itemType
             startActivity(intent)
         }
     }
 
-    // Contoh logika untuk menghitung harga total
     private fun calculateTotalPrice(): Int {
-        return count * 50000 //
+        return count * 50000 // Harga per item
     }
 
     fun increasement(v: View) {

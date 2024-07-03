@@ -16,46 +16,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="31">
-
         <activity
             android:name=".OpenApp"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
+        </activity> <!-- Aktivitas lain dalam aplikasi Anda -->
         <activity
             android:name=".LoginApp"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".RegisterApp"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".HomeActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".TshirtSale"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ShirtSale"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".PoloSale"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".HoodieSale"
             android:exported="true"
@@ -63,7 +56,11 @@
         <activity
             android:name=".CartOrder"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FinishOrder"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
