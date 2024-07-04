@@ -20,6 +20,7 @@ class TshirtSale : AppCompatActivity() {
         valueTextView = findViewById(R.id.value)
         val orderButton: Button = findViewById(R.id.orderButton)
         val backImageView: ImageView = findViewById(R.id.backButton)
+        val profileImageView: ImageView = findViewById(R.id.profile)
 
         orderButton.setOnClickListener {
             val intent = Intent(this, CartOrder::class.java)
@@ -31,6 +32,12 @@ class TshirtSale : AppCompatActivity() {
 
         backImageView.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish() // Menutup activity saat ini untuk menghindari kembali ke sini
+        }
+
+        profileImageView.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
             finish() // Menutup activity saat ini untuk menghindari kembali ke sini
         }

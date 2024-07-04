@@ -73,6 +73,10 @@
             android:name=".HistoryOrder"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".AdminActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

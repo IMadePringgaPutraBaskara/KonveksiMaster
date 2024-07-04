@@ -31,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
         val imageTShirt = findViewById<ImageView>(R.id.imageTShirt)
         val imagePolo = findViewById<ImageView>(R.id.imagePolo)
         val imageHoodie = findViewById<ImageView>(R.id.imageHoodie)
+        val imageProfile = findViewById<ImageView>(R.id.ProfileMenu)
 
         imageShirt.setOnClickListener {
             val intent = Intent(this@HomeActivity, ShirtSale::class.java)
@@ -49,6 +50,11 @@ class HomeActivity : AppCompatActivity() {
 
         imageHoodie.setOnClickListener {
             val intent = Intent(this@HomeActivity, HoodieSale::class.java)
+            startActivity(intent)
+        }
+
+        imageProfile.setOnClickListener{
+            val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
 

@@ -4,8 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#79BAEC</color>
     <color name="alice_blue">#F0F8FF</color>
-
-    <color name="nav_item_color">#F0F8FF</color> <!-- Contoh warna merah -->
-    <color name="nav_background_color">#79BAEC</color> <!-- Contoh warna hijau -->
+    <color name="dark_blue">#0D47A1</color>
 
 </resources>
