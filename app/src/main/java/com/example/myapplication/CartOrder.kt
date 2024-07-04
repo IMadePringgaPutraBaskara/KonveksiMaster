@@ -3,9 +3,18 @@ package com.example.myapplication
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 class CartOrder : AppCompatActivity() {
@@ -17,6 +26,9 @@ class CartOrder : AppCompatActivity() {
     private lateinit var itemCountTextView: TextView
     private lateinit var totalPriceTextView: TextView
     private lateinit var itemTypeTextView: TextView
+    private lateinit var shippingLocationEditText: EditText
+    private lateinit var customerNameEditText: EditText
+    private lateinit var phoneNumberEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +42,9 @@ class CartOrder : AppCompatActivity() {
         itemCountTextView = findViewById(R.id.itemCountTextView)
         totalPriceTextView = findViewById(R.id.totalPriceTextView)
         itemTypeTextView = findViewById(R.id.itemTypeTextView)
+        shippingLocationEditText = findViewById(R.id.shippingLocationEditText)
+        customerNameEditText = findViewById(R.id.customerNameEditText)
+        phoneNumberEditText = findViewById(R.id.phoneNumberEditText)
 
         // Set onClickListener untuk button selectDateButton
         selectDateButton.setOnClickListener {
@@ -38,8 +53,16 @@ class CartOrder : AppCompatActivity() {
 
         // Set onClickListener untuk button submitButton
         submitButton.setOnClickListener {
-            val intent = Intent(this, FinishOrder::class.java)
-            startActivity(intent)
+            val itemCount = intent.getIntExtra("itemCount", 0)
+            val totalPrice = intent.getIntExtra("totalPrice", 0)
+            val itemType = intent.getStringExtra("itemType") ?: ""
+            val customerName = customerNameEditText.text.toString()
+            val shippingLocation = shippingLocationEditText.text.toString()
+            val orderDate = orderDateTextView.text.toString().replace("Tanggal Pemesanan: ", "")
+            val estimatedDate = estimatedDateTextView.text.toString().replace("Estimasi Tanggal Jadi: ", "")
+            val userId = 1 // Anggap ID pengguna statis untuk sekarang
+
+            submitOrder(userId, itemType, itemCount, totalPrice, customerName, shippingLocation, orderDate, estimatedDate)
         }
 
         // Menerima data dari intent
@@ -85,5 +108,37 @@ class CartOrder : AppCompatActivity() {
         val estimatedDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         return "$estimatedDay-$estimatedMonth-$estimatedYear"
+    }
+
+    private fun submitOrder(id_user: Int, jenis_produk: String, jumlah: Int, total_harga: Int, nama_pemesan: String, alamat: String, tgl_pesan: String, tgl_selesai: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val url = URL(Db_connection.urlTransaksi) // URL endpoint untuk menyimpan transaksi
+            val httpURLConnection = url.openConnection() as HttpURLConnection
+            httpURLConnection.requestMethod = "POST"
+            httpURLConnection.doOutput = true
+
+            val data = "id_user=$id_user&nama_pemesan=$nama_pemesan&jenis_produk=$jenis_produk&alamat=$alamat&tgl_pesan=$tgl_pesan&tgl_selesai=$tgl_selesai&total_harga=$total_harga"
+
+            try {
+                val outputStreamWriter = OutputStreamWriter(httpURLConnection.outputStream)
+                outputStreamWriter.write(data)
+                outputStreamWriter.flush()
+
+                val responseCode = httpURLConnection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    withContext(Dispatchers.Main) {
+                        // Jika berhasil, navigasi ke FinishOrder activity
+                        val intent = Intent(this@CartOrder, FinishOrder::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    Log.e("CartOrder", "Failed to submit order: $responseCode")
+                }
+            } catch (e: Exception) {
+                Log.e("CartOrder", "Exception during submitOrder: ${e.message}")
+            } finally {
+                httpURLConnection.disconnect()
+            }
+        }
     }
 }

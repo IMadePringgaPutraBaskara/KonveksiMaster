@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".CartOrder">
 
-
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
