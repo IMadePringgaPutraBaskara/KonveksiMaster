@@ -53,6 +53,16 @@ class CartOrder : AppCompatActivity() {
         // Inisialisasi SharedPreferences
         sharedPreferences = getSharedPreferences("login_pref", Context.MODE_PRIVATE)
 
+        // Menerima data dari Intent
+        val itemCount = intent.getIntExtra("itemCount", 0)
+        val totalPrice = intent.getIntExtra("totalPrice", 0)
+        val itemType = intent.getStringExtra("itemType") ?: ""
+
+        // Menampilkan data yang diterima
+        itemCountTextView.text = "Jumlah Item: $itemCount"
+        totalPriceTextView.text = "Total Harga: $totalPrice"
+        itemTypeTextView.text = "Jenis Item: $itemType"
+
         // Set onClickListener untuk button selectDateButton
         selectDateButton.setOnClickListener {
             showDatePicker()
@@ -60,13 +70,16 @@ class CartOrder : AppCompatActivity() {
 
         // Set onClickListener untuk button submitButton
         submitButton.setOnClickListener {
-            val itemCount = intent.getIntExtra("itemCount", 0)
-            val totalPrice = intent.getIntExtra("totalPrice", 0)
-            val itemType = intent.getStringExtra("itemType") ?: ""
             val customerName = customerNameEditText.text.toString()
             val shippingLocation = shippingLocationEditText.text.toString()
             val orderDate = orderDateTextView.text.toString().replace("Tanggal Pemesanan: ", "")
             val estimatedDate = estimatedDateTextView.text.toString().replace("Estimasi Tanggal Jadi: ", "")
+
+            // Validasi input
+            if (customerName.isBlank() || shippingLocation.isBlank() || orderDate.isBlank() || estimatedDate.isBlank()) {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             // Mendapatkan userId dari SharedPreferences
             val userId = sharedPreferences.getString("id_user", null)?.toIntOrNull() ?: 0
@@ -75,18 +88,9 @@ class CartOrder : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Panggil submitOrder dengan data yang benar
             submitOrder(userId, itemType, itemCount, totalPrice, customerName, shippingLocation, orderDate, estimatedDate)
         }
-
-        // Menerima data dari intent
-        val itemCount = intent.getIntExtra("itemCount", 0)
-        val totalPrice = intent.getIntExtra("totalPrice", 0)
-        val itemType = intent.getStringExtra("itemType")
-
-        // Menampilkan data yang diterima
-        itemCountTextView.text = "Jumlah Item: $itemCount"
-        totalPriceTextView.text = "Total Harga: $totalPrice"
-        itemTypeTextView.text = "Jenis Item: $itemType"
     }
 
     private fun showDatePicker() {
@@ -99,7 +103,7 @@ class CartOrder : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(this,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 // Update orderDateTextView dengan tanggal yang dipilih
-                val selectedDate = "$dayOfMonth-${monthOfYear + 1}-$year" // Format tanggal bisa disesuaikan
+                val selectedDate = "$year-${monthOfYear + 1}-$dayOfMonth" // Format tanggal bisa disesuaikan
                 orderDateTextView.text = "Tanggal Pemesanan: $selectedDate"
 
                 // Hitung estimasi tanggal jadi (contoh: 14 hari setelah tanggal pemesanan)
@@ -120,7 +124,7 @@ class CartOrder : AppCompatActivity() {
         val estimatedMonth = calendar.get(Calendar.MONTH) + 1 // Month dimulai dari 0, jadi tambahkan 1
         val estimatedDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-        return "$estimatedDay-$estimatedMonth-$estimatedYear"
+        return "$estimatedYear-${String.format("%02d", estimatedMonth)}-${String.format("%02d", estimatedDay)}" // Format YYYY-MM-DD
     }
 
     private fun submitOrder(id_user: Int, jenis_produk: String, jumlah: Int, total_harga: Int, nama_pemesan: String, alamat: String, tgl_pesan: String, tgl_selesai: String) {
@@ -129,8 +133,9 @@ class CartOrder : AppCompatActivity() {
             val httpURLConnection = url.openConnection() as HttpURLConnection
             httpURLConnection.requestMethod = "POST"
             httpURLConnection.doOutput = true
+            val itemCount = intent.getIntExtra("itemCount", 0)
 
-            val data = "id_user=$id_user&nama_pemesan=$nama_pemesan&jenis_produk=$jenis_produk&alamat=$alamat&tgl_pesan=$tgl_pesan&tgl_selesai=$tgl_selesai&total_harga=$total_harga"
+            val data = "id_user=$id_user&nama_pemesan=$nama_pemesan&jenis_produk=$jenis_produk&jumlah=$itemCount&alamat=$alamat&tgl_pesan=$tgl_pesan&tgl_selesai=$tgl_selesai&total_harga=$total_harga"
 
             Log.d("CartOrder", "Data to be sent: $data")
 
