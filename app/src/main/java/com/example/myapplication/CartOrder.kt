@@ -1,12 +1,15 @@
 package com.example.myapplication
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +32,7 @@ class CartOrder : AppCompatActivity() {
     private lateinit var shippingLocationEditText: EditText
     private lateinit var customerNameEditText: EditText
     private lateinit var phoneNumberEditText: EditText
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +50,9 @@ class CartOrder : AppCompatActivity() {
         customerNameEditText = findViewById(R.id.customerNameEditText)
         phoneNumberEditText = findViewById(R.id.phoneNumberEditText)
 
+        // Inisialisasi SharedPreferences
+        sharedPreferences = getSharedPreferences("login_pref", Context.MODE_PRIVATE)
+
         // Set onClickListener untuk button selectDateButton
         selectDateButton.setOnClickListener {
             showDatePicker()
@@ -60,7 +67,13 @@ class CartOrder : AppCompatActivity() {
             val shippingLocation = shippingLocationEditText.text.toString()
             val orderDate = orderDateTextView.text.toString().replace("Tanggal Pemesanan: ", "")
             val estimatedDate = estimatedDateTextView.text.toString().replace("Estimasi Tanggal Jadi: ", "")
-            val userId = 1 // Anggap ID pengguna statis untuk sekarang
+
+            // Mendapatkan userId dari SharedPreferences
+            val userId = sharedPreferences.getString("id_user", null)?.toIntOrNull() ?: 0
+            if (userId == 0) {
+                Toast.makeText(this, "User ID not found", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             submitOrder(userId, itemType, itemCount, totalPrice, customerName, shippingLocation, orderDate, estimatedDate)
         }
@@ -119,23 +132,35 @@ class CartOrder : AppCompatActivity() {
 
             val data = "id_user=$id_user&nama_pemesan=$nama_pemesan&jenis_produk=$jenis_produk&alamat=$alamat&tgl_pesan=$tgl_pesan&tgl_selesai=$tgl_selesai&total_harga=$total_harga"
 
+            Log.d("CartOrder", "Data to be sent: $data")
+
             try {
                 val outputStreamWriter = OutputStreamWriter(httpURLConnection.outputStream)
                 outputStreamWriter.write(data)
                 outputStreamWriter.flush()
 
                 val responseCode = httpURLConnection.responseCode
+                val responseMessage = httpURLConnection.responseMessage
+                Log.d("CartOrder", "Response code: $responseCode, Response message: $responseMessage")
+
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     withContext(Dispatchers.Main) {
                         // Jika berhasil, navigasi ke FinishOrder activity
                         val intent = Intent(this@CartOrder, FinishOrder::class.java)
                         startActivity(intent)
+                        Toast.makeText(this@CartOrder, "Order submitted successfully", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Log.e("CartOrder", "Failed to submit order: $responseCode")
+                    Log.e("CartOrder", "Failed to submit order: $responseCode, $responseMessage")
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@CartOrder, "Failed to submit order: $responseMessage", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("CartOrder", "Exception during submitOrder: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@CartOrder, "Exception during submitOrder: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             } finally {
                 httpURLConnection.disconnect()
             }
