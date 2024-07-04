@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
@@ -17,6 +18,8 @@ class CartOrder : AppCompatActivity() {
     private lateinit var itemCountTextView: TextView
     private lateinit var totalPriceTextView: TextView
     private lateinit var itemTypeTextView: TextView
+    private lateinit var back: ImageView
+    private var originActivity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,10 @@ class CartOrder : AppCompatActivity() {
         itemCountTextView = findViewById(R.id.itemCountTextView)
         totalPriceTextView = findViewById(R.id.totalPriceTextView)
         itemTypeTextView = findViewById(R.id.itemTypeTextView)
+        back = findViewById(R.id.back) // Inisialisasi view back
+
+        // Ambil informasi aktivitas asal dari intent
+        originActivity = intent.getStringExtra("originActivity")
 
         // Set onClickListener untuk button selectDateButton
         selectDateButton.setOnClickListener {
@@ -40,6 +47,37 @@ class CartOrder : AppCompatActivity() {
         submitButton.setOnClickListener {
             val intent = Intent(this, FinishOrder::class.java)
             startActivity(intent)
+        }
+
+        // Set onClickListener untuk ImageView back
+        back.setOnClickListener {
+            // Bergantung pada aktivitas asal, kembalikan ke aktivitas yang sesuai
+            when (originActivity) {
+                "TshirtSale" -> {
+                    val intent = Intent(this, TshirtSale::class.java)
+                    startActivity(intent)
+                }
+                "ShirtSale" -> {
+                    val intent = Intent(this, ShirtSale::class.java)
+                    startActivity(intent)
+                }
+                "PoloSale" -> {
+                    val intent = Intent(this, PoloSale::class.java)
+                    startActivity(intent)
+                }
+                "HoodieSale" -> {
+                    val intent = Intent(this, HoodieSale::class.java)
+                    startActivity(intent)
+                }
+                // Tambahkan kasus lainnya sesuai dengan aktivitas asal lainnya
+                else -> {
+                    // Defaultnya kembali ke HomeActivity jika tidak ada informasi asal
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            finish() // Tutup aktivitas saat ini untuk menghindari kembali ke sana
         }
 
         // Menerima data dari intent

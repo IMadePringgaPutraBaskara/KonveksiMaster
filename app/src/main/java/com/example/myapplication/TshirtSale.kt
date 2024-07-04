@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -18,6 +19,7 @@ class TshirtSale : AppCompatActivity() {
 
         valueTextView = findViewById(R.id.value)
         val orderButton: Button = findViewById(R.id.orderButton)
+        val backImageView: ImageView = findViewById(R.id.backButton)
 
         orderButton.setOnClickListener {
             val intent = Intent(this, CartOrder::class.java)
@@ -25,6 +27,12 @@ class TshirtSale : AppCompatActivity() {
             intent.putExtra("totalPrice", calculateTotalPrice())
             intent.putExtra("itemType", "Tshirt") // Tambahkan itemType
             startActivity(intent)
+        }
+
+        backImageView.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish() // Menutup activity saat ini untuk menghindari kembali ke sini
         }
     }
 

@@ -61,6 +61,18 @@
             android:name=".FinishOrder"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".EditProfile"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".HistoryOrder"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

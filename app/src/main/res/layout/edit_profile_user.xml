@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditProfile">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:background="@drawable/back_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="340dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_arrow_back_ios_24"
+            tools:src="@tools:sample/avatars" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="231dp"
+            app:srcCompat="@drawable/logo_konveksi" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="361dp"
+            android:layout_height="68dp"
+            android:background="@drawable/custom_edittext"
+            android:padding="15dp"
+            android:hint="Username"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="361dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_edittext"
+            android:padding="15dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="361dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_edittext"
+            android:padding="15dp"
+            android:hint="Address"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/etTelNumber"
+            android:layout_width="361dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_edittext"
+            android:padding="15dp"
+            android:hint="Telephone Number"
+            android:inputType="phone" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bntUpdateSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="140dp"
+        android:backgroundTint="@color/blue"
+        android:text="Simpan Perubahan"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:text="Delete Account"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

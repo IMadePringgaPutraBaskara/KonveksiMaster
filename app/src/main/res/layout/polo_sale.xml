@@ -54,7 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/texttshirt"
-            app:srcCompat="@drawable/image3h"
+            app:srcCompat="@drawable/image1p"
             tools:src="@tools:sample/avatars" />
 
         <TextView
