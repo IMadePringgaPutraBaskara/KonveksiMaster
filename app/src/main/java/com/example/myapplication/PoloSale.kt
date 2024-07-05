@@ -1,12 +1,12 @@
 package com.example.myapplication
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class PoloSale : AppCompatActivity() {
@@ -20,10 +20,15 @@ class PoloSale : AppCompatActivity() {
 
         valueTextView = findViewById(R.id.value)
         val orderButton: Button = findViewById(R.id.orderButton)
-        val backImageView : ImageView = findViewById(R.id.back)
-        val profileImageView : ImageView = findViewById(R.id.profile)
+        val backImageView: ImageView = findViewById(R.id.back)
+        val profileImageView: ImageView = findViewById(R.id.profile)
 
         orderButton.setOnClickListener {
+            if (count == 0) {
+                // Tampilkan pesan jika jumlah item adalah 0
+                Toast.makeText(this, "Please select at least one item", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val intent = Intent(this, CartOrder::class.java)
             intent.putExtra("itemCount", count)
             intent.putExtra("totalPrice", calculateTotalPrice())
