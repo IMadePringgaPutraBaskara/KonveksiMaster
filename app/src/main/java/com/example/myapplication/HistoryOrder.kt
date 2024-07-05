@@ -1,9 +1,9 @@
 package com.example.myapplication
 
-// TransactionActivity.kt
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +15,6 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.adapter.TransactionAdapter
 import com.example.myapplication.models.Transaction
 import org.json.JSONArray
-import org.json.JSONObject
 
 class HistoryOrder : AppCompatActivity() {
 
@@ -33,8 +32,18 @@ class HistoryOrder : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         transactionList = ArrayList()
 
+        // Setup the adapter for the RecyclerView
+        adapter = TransactionAdapter(transactionList)
+        recyclerView.adapter = adapter
+
         val userId = sharedPreferences.getString("id_user", "0") ?: "0"
         fetchTransactions(userId)
+
+        // Setup the back button
+        val backProfileMenu: ImageView = findViewById(R.id.backProfileMenu)
+        backProfileMenu.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun fetchTransactions(userId: String) {
@@ -44,6 +53,7 @@ class HistoryOrder : AppCompatActivity() {
             { response ->
                 try {
                     val jsonArray = JSONArray(response)
+                    transactionList.clear()
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val transaction = Transaction(
@@ -59,8 +69,7 @@ class HistoryOrder : AppCompatActivity() {
                         )
                         transactionList.add(transaction)
                     }
-                    adapter = TransactionAdapter(transactionList)
-                    recyclerView.adapter = adapter
+                    adapter.notifyDataSetChanged()
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -74,4 +83,3 @@ class HistoryOrder : AppCompatActivity() {
         requestQueue.add(stringRequest)
     }
 }
-

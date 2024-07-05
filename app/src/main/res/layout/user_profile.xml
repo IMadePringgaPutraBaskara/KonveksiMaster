@@ -36,12 +36,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="379dp"
-            android:layout_height="273dp"
+            android:layout_width="324dp"
+            android:layout_height="209dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/logo_akun"/>
+            app:srcCompat="@drawable/logo_akun" />
         <TextView
             android:id="@+id/textViewUsername"
             android:layout_width="match_parent"

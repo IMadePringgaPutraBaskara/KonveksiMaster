@@ -23,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Set TextView user_greeting dengan pesan selamat datang yang mencakup nama pengguna
         val userGreetingTextView = findViewById<TextView>(R.id.user_greeting)
-        userGreetingTextView.text = "Selamat Datang, $username"
+        userGreetingTextView.text = "$username!"
 
         // Setup ImageView listeners seperti yang Anda lakukan sebelumnya
         val imageShirt = findViewById<ImageView>(R.id.imageShirt)
