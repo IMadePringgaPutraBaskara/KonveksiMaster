@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.material)
     implementation(libs.sdkcoroutines)
+    implementation(libs.okhttp)
+    implementation(libs.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

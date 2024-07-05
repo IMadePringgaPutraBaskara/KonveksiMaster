@@ -15,6 +15,8 @@ activityCompose = "1.9.0"
 composeBom = "2023.08.00"
 volley = "1.2.1"
 sdkcoroutines = "1.0.0"
+okhttp = "5.0.0-alpha.14"
+gson = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +40,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 sdkcoroutines = { group = "com.google.android.libraries.sdkcoroutines", name = "sdkcoroutines", version.ref = "sdkcoroutines" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 class HomeActivity : AppCompatActivity() {
@@ -53,39 +52,9 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        imageProfile.setOnClickListener{
+        imageProfile.setOnClickListener {
             val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
             startActivity(intent)
         }
-
-        // Setup logout button
-        val btnLogout = findViewById<Button>(R.id.btnLogout)
-        btnLogout.setOnClickListener {
-            showLogoutConfirmationDialog()
-        }
-    }
-
-    private fun showLogoutConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Konfirmasi Logout")
-        builder.setMessage("Apakah Anda yakin ingin logout?")
-
-        builder.setPositiveButton("Logout") { dialog, which ->
-            // Menghapus session (clear SharedPreferences)
-            sharedPreferences.edit().clear().apply()
-
-            // Redirect ke halaman login
-            val intent = Intent(this@HomeActivity, LoginApp::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish() // Menutup activity saat ini agar tidak dapat kembali dengan tombol back
-        }
-
-        builder.setNegativeButton("Batal") { dialog, which ->
-            dialog.dismiss()
-        }
-
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
     }
 }

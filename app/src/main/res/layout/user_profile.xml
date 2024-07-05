@@ -25,7 +25,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_arrow_back_ios_24"
             tools:src="@tools:sample/avatars" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -37,37 +36,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintBottom_toBottomOf="parent">
-
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="379dp"
+            android:layout_height="273dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/logo_akun"/>
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Menu Profile"
-            android:textSize="30dp"
-            android:gravity="center"/>
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text="Username" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="273dp"
-            app:srcCompat="@drawable/logo_konveksi" />
-
-        <Button
-            android:id="@+id/btnEditProfie"
+        <TextView
+            android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:text="Edit Profile"
-            android:background="@color/blue"/>
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:text="Email" />
 
-        <Button
-            android:id="@+id/btnHistoryOrder"
+        <TextView
+            android:id="@+id/textViewTelNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Pemesanan"
-            android:background="@color/blue"/>
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:text="Telephone Number" />
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:text="Address" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnEditProfile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@color/blue"
+                android:text="Edit"
+                android:textColor="#37474F" />
+
+            <Button
+                android:id="@+id/btnHistoryOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/blue"
+                android:text="Riwayat"
+                android:textColor="#37474F" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Logout"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rounded_red_button" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
