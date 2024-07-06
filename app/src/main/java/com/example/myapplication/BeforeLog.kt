@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -26,8 +27,12 @@ class BeforeLog : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.before_login)
 
+        Log.d("BeforeLog", "onCreate: Layout before_login.xml diinisialisasi")
+
         viewPager2 = findViewById(R.id.ViewPager2)
         val slideDotLL = findViewById<LinearLayout>(R.id.slideDotLL)
+
+        Log.d("BeforeLog", "onCreate: ViewPager2 dan slideDotLL ditemukan")
 
         val imageList = arrayListOf(
             ImageItem(
@@ -40,9 +45,13 @@ class BeforeLog : AppCompatActivity() {
             )
         )
 
+        Log.d("BeforeLog", "onCreate: ImageList diinisialisasi dengan ${imageList.size} gambar")
+
         val imageAdapter = ImageAdapter()
         viewPager2.adapter = imageAdapter
         imageAdapter.submitList(imageList)
+
+        Log.d("BeforeLog", "onCreate: Adapter diatur untuk ViewPager2 dan imageList diserahkan ke adapter")
 
         val dotsImage = Array(imageList.size) { ImageView(this) }
 
@@ -51,11 +60,16 @@ class BeforeLog : AppCompatActivity() {
             slideDotLL.addView(it, params)
         }
 
+        Log.d("BeforeLog", "onCreate: Dots untuk navigasi ditambahkan ke slideDotLL")
+
         // default first dot selected
         dotsImage[0].setImageResource(R.drawable.active_dot)
+        Log.d("BeforeLog", "onCreate: Dot pertama disetel sebagai aktif")
 
         pageChangeListener = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
+                Log.d("BeforeLog", "onPageSelected: Halaman dipilih ke posisi $position")
+
                 dotsImage.mapIndexed { index, imageView ->
                     if (position == index) {
                         imageView.setImageResource(R.drawable.active_dot)
@@ -68,20 +82,22 @@ class BeforeLog : AppCompatActivity() {
         }
         viewPager2.registerOnPageChangeCallback(pageChangeListener)
 
+        Log.d("BeforeLog", "onCreate: pageChangeListener didaftarkan untuk ViewPager2")
+
         // Pastikan ID button benar
         val button = findViewById<Button>(R.id.LoginButton)
         button.setOnClickListener {
-            // Menggunakan BeforeLog::class.java untuk intent
+            Log.d("BeforeLog", "LoginButton diklik, memulai aktivitas LoginApp")
             val intent = Intent(this, LoginApp::class.java)
             startActivity(intent)
         }
+
+        Log.d("BeforeLog", "onCreate: Listener untuk LoginButton diatur")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewPager2.unregisterOnPageChangeCallback(pageChangeListener)
-
+        Log.d("BeforeLog", "onDestroy: pageChangeListener dihapus dari ViewPager2")
     }
-
-
 }

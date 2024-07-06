@@ -50,15 +50,22 @@ class LoginApp : AppCompatActivity() {
                             val status = jsonObject.getString("status")
                             if (status == "success") {
                                 val idUser = jsonObject.getString("userId")
+                                val userStatus = jsonObject.getString("userStatus") // Mendapatkan status pengguna
                                 val editor = sharedPreferences.edit()
                                 editor.putBoolean("isLoggedIn", true)
                                 editor.putString("username", username)
                                 editor.putString("id_user", idUser)
+                                editor.putString("userStatus", userStatus) // Menyimpan status pengguna
                                 editor.apply()
 
                                 Toast.makeText(applicationContext, jsonObject.getString("message"), Toast.LENGTH_SHORT).show()
-                                val intent = Intent(applicationContext, HomeActivity::class.java)
-                                startActivity(intent)
+                                if (userStatus == "admin") {
+                                    val intent = Intent(applicationContext, AdminMain::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val intent = Intent(applicationContext, HomeActivity::class.java)
+                                    startActivity(intent)
+                                }
                                 finish()
                             } else {
                                 Toast.makeText(applicationContext, jsonObject.getString("message"), Toast.LENGTH_SHORT).show()
@@ -83,9 +90,14 @@ class LoginApp : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Cek apakah pengguna sudah login sebelumnya, jika ya langsung arahkan ke HomeActivity
+        // Cek apakah pengguna sudah login sebelumnya, jika ya langsung arahkan ke HomeActivity atau AdminMain
         if (sharedPreferences.getBoolean("isLoggedIn", false)) {
-            val intent = Intent(applicationContext, HomeActivity::class.java)
+            val userStatus = sharedPreferences.getString("userStatus", "user")
+            val intent = if (userStatus == "admin") {
+                Intent(applicationContext, AdminMain::class.java)
+            } else {
+                Intent(applicationContext, HomeActivity::class.java)
+            }
             startActivity(intent)
             finish() // Mengakhiri activity login jika pengguna sudah login sebelumnya
         }
