@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="-141dp"
+        tools:layout_editor_absoluteY="277dp">
 
         <ImageView
             android:id="@+id/imageView6"
@@ -24,42 +26,44 @@
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Hello, Admin"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnOrderList"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:background="@color/blue"
             android:text="Order"
-            android:textColor="@color/black"
-            android:layout_gravity="center"/>
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btnUserList"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@color/blue"
             android:text="User List"
-            android:textColor="@color/black"
-            android:layout_gravity="center"/>
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/LogoutAdmin"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="200sp"
+            android:layout_marginTop="150sp"
             android:background="@drawable/rounded_red_button"
             android:minHeight="48dp"
-            android:text="Logout" />
+            android:text="Logout"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

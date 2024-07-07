@@ -49,12 +49,12 @@ class LoginApp : AppCompatActivity() {
                             val jsonObject = JSONObject(response)
                             val status = jsonObject.getString("status")
                             if (status == "success") {
-                                val idUser = jsonObject.getString("userId")
+                                val idUser = jsonObject.getInt("userId") // Mendapatkan idUser sebagai integer
                                 val userStatus = jsonObject.getString("userStatus") // Mendapatkan status pengguna
                                 val editor = sharedPreferences.edit()
                                 editor.putBoolean("isLoggedIn", true)
                                 editor.putString("username", username)
-                                editor.putString("id_user", idUser)
+                                editor.putInt("user_id", idUser) // Menyimpan id_user sebagai integer
                                 editor.putString("userStatus", userStatus) // Menyimpan status pengguna
                                 editor.apply()
 

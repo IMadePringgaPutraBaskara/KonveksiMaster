@@ -9,6 +9,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 
 class EditProfile : AppCompatActivity() {
 
@@ -17,6 +22,8 @@ class EditProfile : AppCompatActivity() {
     private lateinit var etEmail: EditText
     private lateinit var etAddress: EditText
     private lateinit var etTelNumber: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etConfirmPassword: EditText
     private lateinit var btnUpdateSave: Button
     private lateinit var btnDeleteAccount: Button
     private lateinit var back: ImageView
@@ -26,12 +33,15 @@ class EditProfile : AppCompatActivity() {
         setContentView(R.layout.edit_profile_user)
 
         sharedPreferences = getSharedPreferences("login_pref", MODE_PRIVATE)
+        val userId = sharedPreferences.getInt("user_id", 0)  // Ambil user ID dari SharedPreferences
 
         // Initialize views
         etUsername = findViewById(R.id.etUsername)
         etEmail = findViewById(R.id.etEmail)
         etAddress = findViewById(R.id.etAddress)
         etTelNumber = findViewById(R.id.etTelNumber)
+        etPassword = findViewById(R.id.etPassword)
+        etConfirmPassword = findViewById(R.id.etConfirmPassword)
         btnUpdateSave = findViewById(R.id.bntUpdateSave)
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount)
         back = findViewById(R.id.backProfileMenu)
@@ -48,12 +58,12 @@ class EditProfile : AppCompatActivity() {
 
         // Set OnClickListener for save button
         btnUpdateSave.setOnClickListener {
-            saveUserData()
+            saveUserData(userId)
         }
 
         // Set OnClickListener for delete account button
         btnDeleteAccount.setOnClickListener {
-            showDeleteConfirmationDialog()
+            showDeleteConfirmationDialog(userId)
         }
     }
 
@@ -69,48 +79,120 @@ class EditProfile : AppCompatActivity() {
         etTelNumber.setText(telNumber)
     }
 
-    private fun saveUserData() {
+    private fun saveUserData(userId: Int) {
         val username = etUsername.text.toString()
         val email = etEmail.text.toString()
         val address = etAddress.text.toString()
         val telNumber = etTelNumber.text.toString()
+        val password = etPassword.text.toString()
+        val confirmPassword = etConfirmPassword.text.toString()
 
         if (username.isEmpty() || email.isEmpty() || address.isEmpty() || telNumber.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val editor = sharedPreferences.edit()
-        editor.putString("username", username)
-        editor.putString("email", email)
-        editor.putString("address", address)
-        editor.putString("tel_number", telNumber)
-        editor.apply()
+        if (password.isNotEmpty() && password != confirmPassword) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+        val url = "${Db_connection.urlUpdateUser}"
+
+        // Create a StringRequest to send as the request body
+        val stringRequest = object : StringRequest(
+            Request.Method.POST,
+            url,
+            Response.Listener { response ->
+                try {
+                    if (response == "Update Berhasil") {
+                        val editor = sharedPreferences.edit()
+                        editor.putString("username", username)
+                        editor.putString("email", email)
+                        editor.putString("address", address)
+                        editor.putString("tel_number", telNumber)
+                        // Update password if it's changed
+                        if (password.isNotEmpty()) {
+                            editor.putString("password", password)
+                        }
+                        editor.apply()
+
+                        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["id"] = userId.toString()
+                params["username"] = username
+                params["email"] = email
+                params["alamat"] = address
+                params["no_telp"] = telNumber
+                if (password.isNotEmpty()) {
+                    params["password"] = password
+                }
+                return params
+            }
+        }
+
+        val requestQueue: RequestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
     }
 
-    private fun showDeleteConfirmationDialog() {
+    private fun showDeleteConfirmationDialog(userId: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Confirm Delete")
         builder.setMessage("Are you sure you want to delete your account?")
 
-        builder.setPositiveButton("Delete") { dialog, which ->
-            // Clear SharedPreferences
-            sharedPreferences.edit().clear().apply()
-
-            // Redirect to login screen
-            val intent = Intent(this@EditProfile, LoginApp::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish() // Close this activity to prevent going back
+        builder.setPositiveButton("Delete") { dialog, _ ->
+            deleteAccount(userId)
         }
 
-        builder.setNegativeButton("Cancel") { dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()
         }
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun deleteAccount(userId: Int) {
+        val url = "${Db_connection.urlDeleteAccount}?id=$userId"
+        val stringRequest = StringRequest(Request.Method.DELETE, url,
+            Response.Listener { response ->
+                try {
+                    if (response == "Delete Berhasil") {
+                        // Clear SharedPreferences
+                        sharedPreferences.edit().clear().apply()
+
+                        // Redirect to login screen
+                        val intent = Intent(this@EditProfile, LoginApp::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish() // Close this activity to prevent going back
+                    } else {
+                        Toast.makeText(this, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        val requestQueue: RequestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(stringRequest)
     }
 }

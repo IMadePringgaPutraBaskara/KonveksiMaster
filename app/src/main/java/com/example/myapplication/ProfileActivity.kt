@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,9 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
@@ -35,7 +33,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.user_profile)  // Pastikan nama file layout benar
+        setContentView(R.layout.user_profile)
 
         // Inisialisasi View
         back = findViewById(R.id.backProfileMenu)
@@ -49,13 +47,22 @@ class ProfileActivity : AppCompatActivity() {
         addressTextView = findViewById(R.id.textViewAddress)
 
         sharedPreferences = getSharedPreferences("login_pref", MODE_PRIVATE)
-        val userId = sharedPreferences.getInt("user_id", 0)  // Ambil user ID dari SharedPreferences
+        val userId = sharedPreferences.getInt("user_id", 0) // Ambil user ID dari SharedPreferences
 
-        // Inisialisasi RequestQueue
-        requestQueue = Volley.newRequestQueue(this)
+        Log.d("ProfileActivity", "user_id: $userId") // Tambahkan log ini untuk memastikan user_id diambil dengan benar
 
-        // Ambil data pengguna
-        fetchUserData(userId)
+        if (userId == 0) {
+            Toast.makeText(this, "User ID tidak ditemukan. Silakan login kembali.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LoginApp::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            // Inisialisasi RequestQueue
+            requestQueue = Volley.newRequestQueue(this)
+
+            // Ambil data pengguna
+            fetchUserData(userId)
+        }
 
         // Set OnClickListener untuk tombol back
         back?.setOnClickListener {
@@ -83,7 +90,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun fetchUserData(userId: Int) {
-        val url = "${Db_connection.urlGetUser}id=$userId"
+        val url = "${Db_connection.urlGetUser}?id=$userId"
 
         val stringRequest = StringRequest(Request.Method.GET, url,
             { response ->
@@ -115,10 +122,8 @@ class ProfileActivity : AppCompatActivity() {
             }
         )
 
-        val requestQueue: RequestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
     }
-
 
     private fun showLogoutConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
@@ -144,3 +149,4 @@ class ProfileActivity : AppCompatActivity() {
         dialog.show()
     }
 }
+
