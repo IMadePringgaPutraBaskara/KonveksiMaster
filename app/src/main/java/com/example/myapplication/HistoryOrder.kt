@@ -36,8 +36,13 @@ class HistoryOrder : AppCompatActivity() {
         adapter = TransactionAdapter(transactionList)
         recyclerView.adapter = adapter
 
-        val userId = sharedPreferences.getString("id_user", "0") ?: "0"
-        fetchTransactions(userId)
+        // Mendapatkan userId dari SharedPreferences
+        val userId = sharedPreferences.getInt("user_id", 0)
+        if (userId != 0) {
+            fetchTransactions(userId)
+        } else {
+            Toast.makeText(this, "User ID not found", Toast.LENGTH_SHORT).show()
+        }
 
         // Setup the back button
         val backProfileMenu: ImageView = findViewById(R.id.backProfileMenu)
@@ -46,7 +51,7 @@ class HistoryOrder : AppCompatActivity() {
         }
     }
 
-    private fun fetchTransactions(userId: String) {
+    private fun fetchTransactions(userId: Int) {
         val url = "${Db_connection.urlGetTransaksi}?id=$userId"
 
         val stringRequest = StringRequest(Request.Method.GET, url,
