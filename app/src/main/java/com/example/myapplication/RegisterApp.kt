@@ -20,6 +20,7 @@ class RegisterApp : AppCompatActivity() {
     private lateinit var etTelNumber: EditText
     private lateinit var etPass: EditText
     private lateinit var btnDaftar: Button
+    private lateinit var btnBatal: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,7 @@ class RegisterApp : AppCompatActivity() {
         etTelNumber = findViewById(R.id.tel_number)
         etPass = findViewById(R.id.reg_pass)
         btnDaftar = findViewById(R.id.regist_button)
+        btnBatal = findViewById(R.id.cancel_button)
 
         btnDaftar.setOnClickListener {
             val username = etUsername.text.toString()
@@ -67,6 +69,12 @@ class RegisterApp : AppCompatActivity() {
             } else {
                 Toast.makeText(applicationContext, "Ada data yang masih kosong", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // Menangani klik tombol Batal
+        btnBatal.setOnClickListener {
+            // Menutup activity saat tombol Batal ditekan
+            finish()
         }
     }
 }

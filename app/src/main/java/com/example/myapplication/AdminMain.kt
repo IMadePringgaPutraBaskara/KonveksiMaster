@@ -29,7 +29,7 @@ class AdminMain : AppCompatActivity() {
 
         btnUserList.setOnClickListener {
             // Navigate to User List Activity
-            val intent = Intent(this, UserList::class.java)
+            val intent = Intent(this, AdminUserList::class.java)
             startActivity(intent)
         }
 

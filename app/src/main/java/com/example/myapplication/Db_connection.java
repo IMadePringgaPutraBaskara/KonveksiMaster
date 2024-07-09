@@ -11,4 +11,5 @@ public class Db_connection {
     public static final String urlTransaksi = "http://" + ip + "/KonveksiMaster/api_transaksi.php"; // Tambahkan URL untuk transaksi
     public static final String urlGetAllTransaksi = "http://" + ip + "/KonveksiMaster/api_getAllTransaksi.php"; // Tambahkan URL untuk semua transaksi
     public static final String urlDeleteAccount = "http://" + ip + "/KonveksiMaster/api_delete.php?";
+    public static final String urlGetAllUser = "http://" + ip + "/KonveksiMaster/api_allUser.php";
 }

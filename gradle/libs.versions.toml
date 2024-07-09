@@ -17,6 +17,8 @@ volley = "1.2.1"
 sdkcoroutines = "1.0.0"
 okhttp = "5.0.0-alpha.14"
 gson = "2.11.0"
+recyclerview = "1.4.0-alpha01"
+analysisApiTestFramework = "2.0.20-Beta1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +44,8 @@ volley = { group = "com.android.volley", name = "volley", version.ref = "volley"
 sdkcoroutines = { group = "com.google.android.libraries.sdkcoroutines", name = "sdkcoroutines", version.ref = "sdkcoroutines" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+analysis-api-test-framework = { group = "org.jetbrains.kotlin", name = "analysis-api-test-framework", version.ref = "analysisApiTestFramework" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

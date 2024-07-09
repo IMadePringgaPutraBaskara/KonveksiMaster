@@ -9,4 +9,6 @@
     <string name="title_activity_tshirt_sale">TshirtSale</string>
     <string name="title_activity_cart_ordera">CartOrdera</string>
     <string name="title_activity_admin_order">AdminOrder</string>
+    <string name="title_activity_admin_user_list">AdminUserList</string>
+    <string name="title_activity_admin_user_edit">AdminUserEdit</string>
 </resources>

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,7 @@ class CartOrder : AppCompatActivity() {
     private lateinit var shippingLocationEditText: EditText
     private lateinit var customerNameEditText: EditText
     private lateinit var phoneNumberEditText: EditText
+    private lateinit var backProfileMenu: ImageView
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,7 @@ class CartOrder : AppCompatActivity() {
         shippingLocationEditText = findViewById(R.id.shippingLocationEditText)
         customerNameEditText = findViewById(R.id.customerNameEditText)
         phoneNumberEditText = findViewById(R.id.phoneNumberEditText)
+        backProfileMenu = findViewById(R.id.backProfileMenu)
 
         // Inisialisasi SharedPreferences
         sharedPreferences = getSharedPreferences("login_pref", Context.MODE_PRIVATE)
@@ -91,6 +94,11 @@ class CartOrder : AppCompatActivity() {
 
             // Panggil submitOrder dengan data yang benar
             submitOrder(userId, itemType, itemCount, totalPrice, customerName, shippingLocation, orderDate, estimatedDate)
+        }
+
+        // Set onClickListener untuk button backProfileMenu
+        backProfileMenu.setOnClickListener {
+            onBackPressed()
         }
     }
 

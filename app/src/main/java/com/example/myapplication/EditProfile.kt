@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -98,13 +99,15 @@ class EditProfile : AppCompatActivity() {
             return
         }
 
-        val url = "${Db_connection.urlUpdateUser}"
+        val url = "${Db_connection.urlUpdateUser}?id=$userId"
+        Log.d("EditProfile", "URL: $url")
 
         // Create a StringRequest to send as the request body
         val stringRequest = object : StringRequest(
             Request.Method.POST,
             url,
             Response.Listener { response ->
+                Log.d("EditProfile", "Response: $response")
                 try {
                     if (response == "Update Berhasil") {
                         val editor = sharedPreferences.edit()
@@ -128,6 +131,7 @@ class EditProfile : AppCompatActivity() {
                 }
             },
             Response.ErrorListener { error ->
+                Log.e("EditProfile", "Error: ${error.message}")
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         ) {
@@ -141,6 +145,7 @@ class EditProfile : AppCompatActivity() {
                 if (password.isNotEmpty()) {
                     params["password"] = password
                 }
+                Log.d("EditProfile", "Params: $params")
                 return params
             }
         }
@@ -173,6 +178,7 @@ class EditProfile : AppCompatActivity() {
             Request.Method.POST,
             url,
             Response.Listener { response ->
+                Log.d("EditProfile", "Delete Response: $response")
                 try {
                     val jsonResponse = JSONObject(response)
                     if (jsonResponse.has("message") && jsonResponse.getString("message") == "User berhasil dihapus") {
@@ -193,6 +199,7 @@ class EditProfile : AppCompatActivity() {
                 }
             },
             Response.ErrorListener { error ->
+                Log.e("EditProfile", "Delete Error: ${error.message}")
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         ) {

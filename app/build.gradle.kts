@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.sdkcoroutines)
     implementation(libs.okhttp)
     implementation(libs.gson)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.analysis.api.test.framework)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,5 +83,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
 }
