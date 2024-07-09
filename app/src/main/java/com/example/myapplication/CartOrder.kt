@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
@@ -82,7 +83,7 @@ class CartOrder : AppCompatActivity() {
             }
 
             // Mendapatkan userId dari SharedPreferences
-            val userId = sharedPreferences.getString("id_user", null)?.toIntOrNull() ?: 0
+            val userId = sharedPreferences.getInt("user_id", 0)
             if (userId == 0) {
                 Toast.makeText(this, "User ID not found", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -133,9 +134,8 @@ class CartOrder : AppCompatActivity() {
             val httpURLConnection = url.openConnection() as HttpURLConnection
             httpURLConnection.requestMethod = "POST"
             httpURLConnection.doOutput = true
-            val itemCount = intent.getIntExtra("itemCount", 0)
 
-            val data = "id_user=$id_user&nama_pemesan=$nama_pemesan&jenis_produk=$jenis_produk&jumlah=$itemCount&alamat=$alamat&tgl_pesan=$tgl_pesan&tgl_selesai=$tgl_selesai&total_harga=$total_harga"
+            val data = "id_user=$id_user&jenis_produk=$jenis_produk&jumlah=$jumlah&nama_pemesan=$nama_pemesan&alamat=$alamat&tgl_pesan=$tgl_pesan&tgl_selesai=$tgl_selesai&total_harga=$total_harga"
 
             Log.d("CartOrder", "Data to be sent: $data")
 
@@ -149,11 +149,23 @@ class CartOrder : AppCompatActivity() {
                 Log.d("CartOrder", "Response code: $responseCode, Response message: $responseMessage")
 
                 if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Membaca respons dari server
+                    val response = httpURLConnection.inputStream.bufferedReader().use { it.readText() }
+                    Log.d("CartOrder", "Server response: $response")
+
+                    val jsonResponse = JSONObject(response)
+                    val status = jsonResponse.getString("status")
+                    val message = jsonResponse.getString("message")
+
                     withContext(Dispatchers.Main) {
-                        // Jika berhasil, navigasi ke FinishOrder activity
-                        val intent = Intent(this@CartOrder, FinishOrder::class.java)
-                        startActivity(intent)
-                        Toast.makeText(this@CartOrder, "Order submitted successfully", Toast.LENGTH_SHORT).show()
+                        if (status == "success") {
+                            // Jika berhasil, navigasi ke FinishOrder activity
+                            val intent = Intent(this@CartOrder, FinishOrder::class.java)
+                            startActivity(intent)
+                            Toast.makeText(this@CartOrder, "Order submitted successfully", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this@CartOrder, message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 } else {
                     Log.e("CartOrder", "Failed to submit order: $responseCode, $responseMessage")
@@ -162,7 +174,7 @@ class CartOrder : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Log.e("CartOrder", "Exception during submitOrder: ${e.message}")
+                Log.e("CartOrder", "Exception during submitOrder: ${e.message}", e)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@CartOrder, "Exception during submitOrder: ${e.message}", Toast.LENGTH_SHORT).show()
                 }

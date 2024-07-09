@@ -14,6 +14,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 class EditProfile : AppCompatActivity() {
 
@@ -148,6 +149,7 @@ class EditProfile : AppCompatActivity() {
         requestQueue.add(stringRequest)
     }
 
+
     private fun showDeleteConfirmationDialog(userId: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Confirm Delete")
@@ -166,11 +168,14 @@ class EditProfile : AppCompatActivity() {
     }
 
     private fun deleteAccount(userId: Int) {
-        val url = "${Db_connection.urlDeleteAccount}?id=$userId"
-        val stringRequest = StringRequest(Request.Method.DELETE, url,
+        val url = Db_connection.urlDeleteAccount
+        val stringRequest = object : StringRequest(
+            Request.Method.POST,
+            url,
             Response.Listener { response ->
                 try {
-                    if (response == "Delete Berhasil") {
+                    val jsonResponse = JSONObject(response)
+                    if (jsonResponse.has("message") && jsonResponse.getString("message") == "User berhasil dihapus") {
                         // Clear SharedPreferences
                         sharedPreferences.edit().clear().apply()
 
@@ -180,7 +185,7 @@ class EditProfile : AppCompatActivity() {
                         startActivity(intent)
                         finish() // Close this activity to prevent going back
                     } else {
-                        Toast.makeText(this, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, jsonResponse.getString("error"), Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -190,7 +195,13 @@ class EditProfile : AppCompatActivity() {
             Response.ErrorListener { error ->
                 Toast.makeText(this, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             }
-        )
+        ) {
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params["id"] = userId.toString()
+                return params
+            }
+        }
 
         val requestQueue: RequestQueue = Volley.newRequestQueue(this)
         requestQueue.add(stringRequest)
