@@ -118,23 +118,23 @@
 
         <TextView
             android:id="@+id/value"
-            android:layout_width="17dp"
-            android:layout_height="42dp"
+            android:layout_width="34dp"
+            android:layout_height="39dp"
             android:text="0"
             android:textSize="30sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonplus"
-            app:layout_constraintStart_toEndOf="@+id/buttonminus" />
+            app:layout_constraintStart_toEndOf="@+id/buttonminus"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/desikripsibaju"
-        android:layout_width="372dp"
-        android:layout_height="36dp"
+        android:layout_width="364dp"
+        android:layout_height="100dp"
         android:layout_marginTop="30dp"
-        android:text="Kaos polos dengan bahan cotton combat yang halus dan nyaman saat digunakan"
+        android:text="Kaos polo ini terbuat dari bahan cotton pique yang berkualitas tinggi, memberikan tekstur yang khas dan kesan elegan. Bahan cotton pique tidak hanya lembut dan nyaman, tetapi juga memiliki daya tahan yang baik sehingga tidak mudah melar meskipun sering dipakai. "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomBar" />
@@ -146,8 +146,8 @@
         android:layout_marginTop="60dp"
         android:background="@color/alice_blue"
         android:text="Order Sekarang"
-        app:layout_constraintTop_toBottomOf="@+id/desikripsibaju"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/desikripsibaju" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

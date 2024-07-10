@@ -131,11 +131,12 @@
 
     <TextView
         android:id="@+id/desikripsibaju"
-        android:layout_width="370dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="30dp"
-        android:text="Baju kemeja yang memiliki kenyamanan terbaik dengan kualitas yang tidak bisa ditandingi. Cocok untuk keseharian mu"
+        android:layout_width="376dp"
+        android:layout_height="114dp"
+        android:layout_marginTop="24dp"
+        android:text="Kemeja ini dibuat dari bahan katun premium yang halus dan nyaman di kulit, menjadikannya pilihan sempurna untuk penampilan formal dan profesional. Bahan katun premium ini tidak hanya memberikan sirkulasi udara yang baik sehingga nyaman dipakai sepanjang hari, tetapi juga mudah dirawat dan tahan lama"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomBar" />
 
@@ -143,7 +144,7 @@
         android:id="@+id/orderButton"
         android:layout_width="187dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/alice_blue"
         android:text="Order Sekarang"
         app:layout_constraintTop_toBottomOf="@+id/desikripsibaju"

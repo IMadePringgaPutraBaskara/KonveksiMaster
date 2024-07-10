@@ -9,21 +9,23 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutContent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="391dp"
+        android:layout_height="512dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="200dp"
+        android:gravity="center"
         android:orientation="vertical"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBackToHome"
-        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.733">
 
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="442dp"
-            android:layout_marginBottom="16dp"
             app:srcCompat="@drawable/logo_konveksi" />
 
         <TextView
@@ -34,14 +36,4 @@
             android:textSize="25sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonBackToHome"
-        android:layout_width="248dp"
-        android:layout_height="64dp"
-        android:layout_margin="16dp"
-        android:background="@color/blue"
-        android:text="Kembali ke Beranda"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

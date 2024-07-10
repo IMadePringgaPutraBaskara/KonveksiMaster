@@ -2,24 +2,25 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 
 class FinishOrder : AppCompatActivity() {
-
-    private lateinit var backButton: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.finish_order)
 
-        backButton = findViewById(R.id.buttonBackToHome)
+        Handler().postDelayed({ // Start the main activity after the splash screen duration
+            val mainIntent = Intent(
+                this@FinishOrder,
+                HomeActivity::class.java
+            )
+            this@FinishOrder.startActivity(mainIntent)
+            this@FinishOrder.finish()
+        }, SPLASH_DISPLAY_LENGTH.toLong())
+    }
 
-        // Set onClickListener untuk button backButton
-        backButton.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            finish() // Opsional: untuk menutup aktivitas saat ini sehingga tidak dapat kembali ke sana
-        }
+    companion object {
+        private const val SPLASH_DISPLAY_LENGTH = 3000 // Duration of wait in milliseconds
     }
 }
