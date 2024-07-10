@@ -8,14 +8,20 @@ data class User(
     val username: String,
     val email: String,
     val address: String,
-    val telNumber: String
+    val telNumber: String,
+    val status: String // Menambahkan status
 ) : Parcelable {
+    init {
+        require(status == "user" || status == "admin") { "Status must be either 'user' or 'admin'" }
+    }
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",
+        parcel.readString() ?: "" // Membaca status dari Parcel
     ) {
     }
 
@@ -25,6 +31,7 @@ data class User(
         parcel.writeString(email)
         parcel.writeString(address)
         parcel.writeString(telNumber)
+        parcel.writeString(status) // Menulis status ke Parcel
     }
 
     override fun describeContents(): Int {

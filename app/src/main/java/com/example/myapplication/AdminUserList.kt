@@ -55,7 +55,8 @@ class AdminUserList : AppCompatActivity() {
                         val email = jsonObject.getString("email")
                         val address = jsonObject.getString("alamat")
                         val telNumber = jsonObject.getString("no_telp")
-                        val user = User(id, username, email, address, telNumber)
+                        val status = jsonObject.getString("status") // Menambahkan status
+                        val user = User(id, username, email, address, telNumber, status) // Menambahkan status ke User
                         userList.add(user)
                     }
                     userAdapter.notifyDataSetChanged()
@@ -72,13 +73,10 @@ class AdminUserList : AppCompatActivity() {
         requestQueue.add(stringRequest)
     }
 
+
     private fun onUserClick(user: User) {
         val intent = Intent(this, AdminUserEdit::class.java)
-        intent.putExtra("userId", user.id)
-        intent.putExtra("username", user.username)
-        intent.putExtra("email", user.email)
-        intent.putExtra("address", user.address)
-        intent.putExtra("telNumber", user.telNumber)
+        intent.putExtra("user", user) // Mengirimkan objek user yang lengkap
         startActivity(intent)
     }
 }

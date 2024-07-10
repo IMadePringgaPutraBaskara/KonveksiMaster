@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class UserListAdapter(
     private val userList: List<User>,
-    private val onItemClick: (User) -> Unit
+    private val onUserClick: (User) -> Unit
 ) : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -18,23 +18,28 @@ class UserListAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = userList[position]
-        holder.bind(user)
+        holder.bind(user, onUserClick)
     }
 
-    override fun getItemCount() = userList.size
+    override fun getItemCount(): Int {
+        return userList.size
+    }
 
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvUsername: TextView = itemView.findViewById(R.id.tvUsername)
-        private val tvEmail: TextView = itemView.findViewById(R.id.tvEmail)
-        private val tvTelNumber: TextView = itemView.findViewById(R.id.tvTelNumber)
-        private val tvAddress: TextView = itemView.findViewById(R.id.tvAddress)
+    class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val usernameTextView: TextView = itemView.findViewById(R.id.tvUsername)
+        private val emailTextView: TextView = itemView.findViewById(R.id.tvEmail)
+        private val telNumberTextView: TextView = itemView.findViewById(R.id.tvTelNumber)
+        private val addressTextView: TextView = itemView.findViewById(R.id.tvAddress)
+        private val statusTextView: TextView = itemView.findViewById(R.id.tvStatus) // Menambahkan TextView untuk status
 
-        fun bind(user: User) {
-            tvUsername.text = user.username
-            tvEmail.text = user.email
-            tvTelNumber.text = user.telNumber
-            tvAddress.text = user.address
-            itemView.setOnClickListener { onItemClick(user) }
+        fun bind(user: User, onUserClick: (User) -> Unit) {
+            usernameTextView.text = user.username
+            emailTextView.text = user.email
+            telNumberTextView.text = user.telNumber
+            addressTextView.text = user.address
+            statusTextView.text = user.status // Menampilkan status pada TextView
+
+            itemView.setOnClickListener { onUserClick(user) }
         }
     }
 }

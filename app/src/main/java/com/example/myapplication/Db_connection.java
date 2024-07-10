@@ -1,7 +1,7 @@
 package com.example.myapplication;
 
 public class Db_connection {
-    public static String ip = "192.168.1.65";
+    public static String ip = "192.168.1.67";
 
     public static final String urlLogin = "http://" + ip + "/KonveksiMaster/api_login.php";
     public static final String urlRegister = "http://" + ip + "/KonveksiMaster/api_register.php";
@@ -12,4 +12,5 @@ public class Db_connection {
     public static final String urlGetAllTransaksi = "http://" + ip + "/KonveksiMaster/api_getAllTransaksi.php"; // Tambahkan URL untuk semua transaksi
     public static final String urlDeleteAccount = "http://" + ip + "/KonveksiMaster/api_delete.php?";
     public static final String urlGetAllUser = "http://" + ip + "/KonveksiMaster/api_allUser.php";
+    public static final String urlAdminEditUser = "http://" + ip + "/KonveksiMaster/api_adminSetUser.php?";
 }

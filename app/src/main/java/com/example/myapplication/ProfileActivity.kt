@@ -14,14 +14,10 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.json.JSONObject
 
 class ProfileActivity : AppCompatActivity() {
-
-    private var back: ImageView? = null
-    private var btnEditProfile: Button? = null
-    private var btnHistoryOrder: Button? = null
-    private var btnLogout: Button? = null
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var userNameTextView: TextView
@@ -29,17 +25,13 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var telNumberTextView: TextView
     private lateinit var addressTextView: TextView
 
-    private lateinit var requestQueue: RequestQueue
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_profile)
 
         // Inisialisasi View
-        back = findViewById(R.id.backProfileMenu)
-        btnEditProfile = findViewById(R.id.btnEditProfile)
-        btnHistoryOrder = findViewById(R.id.btnHistoryOrder)
-        btnLogout = findViewById(R.id.btnLogout)
+        val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
+        val btnHistoryOrder = findViewById<Button>(R.id.btnHistoryOrder)
 
         userNameTextView = findViewById(R.id.textViewUsername)
         emailTextView = findViewById(R.id.textViewEmail)
@@ -47,9 +39,9 @@ class ProfileActivity : AppCompatActivity() {
         addressTextView = findViewById(R.id.textViewAddress)
 
         sharedPreferences = getSharedPreferences("login_pref", MODE_PRIVATE)
-        val userId = sharedPreferences.getInt("user_id", 0) // Ambil user ID dari SharedPreferences
+        val userId = sharedPreferences.getInt("user_id", 0)
 
-        Log.d("ProfileActivity", "user_id: $userId") // Tambahkan log ini untuk memastikan user_id diambil dengan benar
+        Log.d("ProfileActivity", "user_id: $userId")
 
         if (userId == 0) {
             Toast.makeText(this, "User ID tidak ditemukan. Silakan login kembali.", Toast.LENGTH_SHORT).show()
@@ -57,39 +49,44 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            // Inisialisasi RequestQueue
-            requestQueue = Volley.newRequestQueue(this)
-
-            // Ambil data pengguna
-            fetchUserData(userId)
-        }
-
-        // Set OnClickListener untuk tombol back
-        back?.setOnClickListener {
-            val intent = Intent(this@ProfileActivity, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            val requestQueue = Volley.newRequestQueue(this)
+            fetchUserData(userId, requestQueue)
         }
 
         // Set OnClickListener untuk tombol btnEditProfile
-        btnEditProfile?.setOnClickListener {
+        btnEditProfile.setOnClickListener {
             val intent = Intent(this@ProfileActivity, EditProfile::class.java)
             startActivity(intent)
         }
 
         // Set OnClickListener untuk tombol btnHistoryOrder
-        btnHistoryOrder?.setOnClickListener {
+        btnHistoryOrder.setOnClickListener {
             val intent = Intent(this@ProfileActivity, HistoryOrder::class.java)
             startActivity(intent)
         }
 
-        // Set OnClickListener untuk tombol btnLogout
-        btnLogout?.setOnClickListener {
-            showLogoutConfirmationDialog()
+        // Bottom Navigation
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    true
+                }
+                R.id.history -> {
+                    startActivity(Intent(this, HistoryOrder::class.java))
+                    true
+                }
+                R.id.logout -> {
+                    showLogoutConfirmationDialog()
+                    true
+                }
+                else -> false
+            }
         }
     }
 
-    private fun fetchUserData(userId: Int) {
+    private fun fetchUserData(userId: Int, requestQueue: RequestQueue) {
         val url = "${Db_connection.urlGetUser}?id=$userId"
 
         val stringRequest = StringRequest(Request.Method.GET, url,
@@ -98,10 +95,8 @@ class ProfileActivity : AppCompatActivity() {
                     val jsonObject = JSONObject(response)
 
                     if (jsonObject.has("error")) {
-                        // Tampilkan error jika ada
                         userNameTextView.text = "Error: ${jsonObject.getString("error")}"
                     } else {
-                        // Ambil data dari JSON dan update UI
                         val username = jsonObject.getString("username")
                         val email = jsonObject.getString("email")
                         val noTelp = jsonObject.getString("no_telp")
@@ -131,14 +126,11 @@ class ProfileActivity : AppCompatActivity() {
         builder.setMessage("Apakah Anda yakin ingin logout?")
 
         builder.setPositiveButton("Logout") { dialog, which ->
-            // Menghapus session (clear SharedPreferences)
             sharedPreferences.edit().clear().apply()
-
-            // Redirect ke halaman login
             val intent = Intent(this@ProfileActivity, LoginApp::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            finish() // Menutup activity saat ini agar tidak dapat kembali dengan tombol back
+            finish()
         }
 
         builder.setNegativeButton("Batal") { dialog, which ->
@@ -149,4 +141,3 @@ class ProfileActivity : AppCompatActivity() {
         dialog.show()
     }
 }
-

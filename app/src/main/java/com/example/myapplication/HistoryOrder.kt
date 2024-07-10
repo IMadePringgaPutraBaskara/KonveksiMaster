@@ -1,10 +1,12 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ import com.android.volley.toolbox.Volley
 import com.example.myapplication.adapter.TransactionAdapter
 import com.example.myapplication.models.Transaction
 import org.json.JSONArray
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HistoryOrder : AppCompatActivity() {
 
@@ -27,16 +30,17 @@ class HistoryOrder : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.history_order)
 
+        // Initialize SharedPreferences
         sharedPreferences = getSharedPreferences("login_pref", Context.MODE_PRIVATE)
+
+        // Initialize RecyclerView and Adapter
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         transactionList = ArrayList()
-
-        // Setup the adapter for the RecyclerView
         adapter = TransactionAdapter(transactionList)
         recyclerView.adapter = adapter
 
-        // Mendapatkan userId dari SharedPreferences
+        // Get userId from SharedPreferences
         val userId = sharedPreferences.getInt("user_id", 0)
         if (userId != 0) {
             fetchTransactions(userId)
@@ -44,11 +48,50 @@ class HistoryOrder : AppCompatActivity() {
             Toast.makeText(this, "User ID not found", Toast.LENGTH_SHORT).show()
         }
 
-        // Setup the back button
-        val backProfileMenu: ImageView = findViewById(R.id.backProfileMenu)
-        backProfileMenu.setOnClickListener {
-            onBackPressed()
+        // Set up BottomNavigationView
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.history // Set 'history' as selected item by default
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    true
+                }
+                R.id.history -> {
+                    // Already in HistoryOrder, do nothing
+                    true
+                }
+                R.id.logout -> {
+                    showLogoutConfirmationDialog()
+                    true
+                }
+                else -> false
+            }
         }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Konfirmasi Logout")
+        builder.setMessage("Apakah Anda yakin ingin logout?")
+
+        builder.setPositiveButton("Logout") { dialog, _ ->
+            // Clear SharedPreferences
+            sharedPreferences.edit().clear().apply()
+
+            // Redirect to LoginActivity
+            val intent = Intent(this, LoginApp::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish() // Close this activity to prevent returning to it
+        }
+
+        builder.setNegativeButton("Batal") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.create().show()
     }
 
     private fun fetchTransactions(userId: Int) {

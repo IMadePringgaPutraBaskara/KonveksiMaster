@@ -53,9 +53,7 @@ class EditProfile : AppCompatActivity() {
 
         // Set OnClickListener for back button
         back.setOnClickListener {
-            val intent = Intent(this@EditProfile, ProfileActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed() // Go back to the previous activity
         }
 
         // Set OnClickListener for save button
@@ -99,7 +97,8 @@ class EditProfile : AppCompatActivity() {
             return
         }
 
-        val url = "${Db_connection.urlUpdateUser}?id=$userId"
+        val url = "${Db_connection.urlUpdateUser}"
+
         Log.d("EditProfile", "URL: $url")
 
         // Create a StringRequest to send as the request body
@@ -109,7 +108,11 @@ class EditProfile : AppCompatActivity() {
             Response.Listener { response ->
                 Log.d("EditProfile", "Response: $response")
                 try {
-                    if (response == "Update Berhasil") {
+                    val jsonResponse = JSONObject(response)
+                    val status = jsonResponse.getString("status")
+                    val message = jsonResponse.getString("message")
+
+                    if (status == "success") {
                         val editor = sharedPreferences.edit()
                         editor.putString("username", username)
                         editor.putString("email", email)
@@ -121,9 +124,12 @@ class EditProfile : AppCompatActivity() {
                         }
                         editor.apply()
 
-                        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+                        // Go back to the previous activity
+                        finish() // Close this activity
                     } else {
-                        Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -154,7 +160,6 @@ class EditProfile : AppCompatActivity() {
         requestQueue.add(stringRequest)
     }
 
-
     private fun showDeleteConfirmationDialog(userId: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Confirm Delete")
@@ -181,7 +186,9 @@ class EditProfile : AppCompatActivity() {
                 Log.d("EditProfile", "Delete Response: $response")
                 try {
                     val jsonResponse = JSONObject(response)
-                    if (jsonResponse.has("message") && jsonResponse.getString("message") == "User berhasil dihapus") {
+                    val message = jsonResponse.getString("message")
+
+                    if (message == "User berhasil dihapus") {
                         // Clear SharedPreferences
                         sharedPreferences.edit().clear().apply()
 
